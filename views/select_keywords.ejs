@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>QG-UI</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+    <link rel="stylesheet" type="text/css" href="stylesheets/styles.css">
+    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="//oss.maxcdn.com/jquery.trip.js/3.3.3/trip.min.css">
+    <script src="/javascripts/trip.js"></script>
+  </head>
+  <body style="background:lavender">
+    <div id="main" class="row no-gutters" style="height:100vh">
+        <div class="container-fluid">
+          <a href="/" style="text-decoration:none" class="anchorCSS">ParaQG</a>
+          <button class="openbtn"  style="float:right" onclick="openNav()">☰ </button><hr>
+
+          <div class="row">
+            <div class="col-lg-2" style="padding-right:0.7px">
+                <button class="tablink np" onclick="openTab(event,'np')" id="defaultOpen">Noun Phrase</button>
+            </div>
+            <div class="col-lg-2 nopadding">
+                <button class="tablink ner" onclick="openTab(event,'ner')" id="ner_tab">Named Entity</button>
+            </div>
+            <div class="col-lg-2 nopadding">
+                <button class="tablink custom" onclick="openTab(event,'custom')" id="custom_tab" >Custom Answers</button>
+            </div>
+          </div>
+          <div class="">
+            <form id="keyword_form" action="/questions" method="post">
+              <div id="np" class="keyword_button_np tabcontent">
+                <div class="review form-control" style="height:56vh">
+                  <ul id="selectable1">
+                    <div class="display_para_np" data-val="<%= JSON.stringify(np_disp_para) %>" style="white-space: pre-wrap;">
+
+                    </div>
+                  </ul>
+                </div><br>
+                <div class="">
+                  <h6 class="np_total">Total: <%= np_length %></h6>
+                  <h6 class="np_selected">Selected: </h6>
+                </div>
+              </div>
+              <div id="ner" class="keyword_button_ner tabcontent">
+                <div class="review form-control" style="height:56vh">
+                  <ul id="selectable2">
+                    <div class="display_para_ner" data-val="<%= JSON.stringify(ner_disp_para) %>" style="white-space: pre-wrap;">
+
+                    </div>
+                  </ul>
+                </div><br>
+                <div class="">
+                  <h6 class="ner_total">Total: <%= ner_length %></h6>
+                  <h6 class="ner_selected">Selected: </h6>
+                </div>
+              </div>
+
+
+              <div id="custom" class="tabcontent">
+
+                  <div id="textarea1"  contenteditable="false" class="custom_keyword review form-control" data-val="<%= input_para %>"  style="height:56vh">
+
+                  </div><br>
+                  <div class="">
+                    <h6 class="custom_selected">Selected: </h6>
+                  </div>
+                  <button type="button" id="addbtn" class="material_btn add" style="float:left;" title="Add selected keyword" onclick="add_keyword(event)"><i class="w3-xxlarge material-icons">add</i></button>
+                  <button type="button" id="resetbtn" class="material_btn reset" style="float:left;" title="Reset selected keyword" onclick="reset_keyword(event)"><i class="w3-xxlarge material-icons">refresh</i></button>
+              </div>
+
+              <div class="col-lg-12">
+                  <button type="submit" id="proceedBtn" class="btn btn-primary" style="float:right">Proceed</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div id="Sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <h5 style="text-decoration:none">Submit Content</h5>
+        <h5 style="text-decoration:none">Review Content</h5>
+        <h5 class="active" style="text-decoration:none">Select answers<button type="button" class="material_btn" onclick="fireWalkthrough()" title="Walkthrough"><i style="color:white" class="w3-large material-icons">contact_support</i></button></h5>
+        <h5 style="text-decoration:none">Question ideas</h5>
+      </div>
+
+
+
+    <script src="javascripts/select_keywords.js"></script>
+
+  </body>
+</html>

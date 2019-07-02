@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>QG-UI</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="javascripts/ejs.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/styles.css">
+    <link rel="stylesheet" type="text/css" href="//oss.maxcdn.com/jquery.trip.js/3.3.3/trip.min.css">
+    <script src="/javascripts/trip.js"></script>
+    <script>
+      window.ourdata = <%- JSON.stringify(generatedQuestion) %>
+    </script>
+  </head>
+  <body style="background:lavender">
+    <div id="main" class="row no-gutters">
+        <div class="container-fluid">
+          <a href="/" style="text-decoration:none" class="anchorCSS">ParaQG</a>
+          <button class="openbtn"  style="float:right"onclick="openNav()">☰ </button><hr>
+
+          <div class="row">
+            <div class="col-lg-3" style="padding-right:0.7px">
+                <button class="tablink qapair" onclick="openTab(event,'normal_pair')" id="defaultOpen">Question Answer Pair</button>
+            </div>
+            <div class="col-lg-2 nopadding" >
+                <button class="tablink ga" onclick="openTab(event,'grouped_pair')" id="grouped_pair_tab">Grouped answer</button>
+            </div>
+            <div class="col-lg-2 nopadding" >
+                <button class="tablink fq" onclick="openTab(event,'filtered_questions')" id="filtered_questions_tab">Filtered Questions</button>
+            </div>
+          </div>
+          <div class="">
+            <div id="normal_pair" class="tabcontent">
+              <form id="keyword_form" action="/questions" method="post">
+                <div>
+                  <!-- <h4 class="quesPairLength"></h4><br> -->
+                  <div class="dropdown">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                      Filter questions
+                    </button>
+                    <div class="dropdown-menu">
+                      <div>
+                        <label for="intra_filter">  intra question filter</label>
+                        <input id="intra_filter" type="range" min="0" max="1" value="0.2" step="0.001" onchange="updateIntraSlider(this.value)">
+                       </div>
+                      <div class="dropdown-divider"></div>
+                      <div>
+                        <label for="inter_filter">  inter question filter</label>
+                        <input id="inter_filter" type="range" min="0" max="1" value="0.2" step="0.001" onchange="updateInterSlider(this.value)">
+                       </div>
+                    </div>
+                  </div>
+
+                  <table class="display" id="quesPair">
+                    <thead>
+                      <th>Question Answer Pair</th>
+                    </thead>
+                    <tbody>
+                  <% for(var i=0; i < generatedQuestion.length; i++) {%>
+
+                      <tr class="overall_score">
+                        <td>
+                          <div class="qsPair">
+                            <span class="spanData" id="span<%=generatedQuestion[i].index %>" data-val="<%= JSON.stringify(generatedQuestion[i]) %>" style="display: block;border-radius: 5px 5px 5px;border: 1px solid #777;">
+                              <button type="button" style="float:right" onclick="handleDeleteBtn(event)" title="Delete this question answer pair" class="deleteBtn"><i class="w3-xxlarge material-icons">delete</i></button>
+                              <button type="button" class="span descBtn" style="float:right" title="View Source Paragraph" name="button" onclick="view(event)" data-toggle="modal" data-target="#modal<%=generatedQuestion[i].index %>"><i class="w3-xxlarge material-icons">description</i></button><br>
+                              <div class="ques">
+                                <table width="100%" style="table-layout:fixed;" >
+                                  <tr>
+                                    <th width="70%" style="word-wrap:break-word">Question<button type="button" class="span viewQuesBtn" title="View question log" onclick="viewQuesLog(event)"  data-toggle="modal" data-target="#quesLog<%=generatedQuestion[i].index %>"><i class="w3-xxlarge material-icons">chrome_reader_mode</i></button> Confidence : <%= parseFloat(generatedQuestion[i].overall_score).toFixed(5) %></th>
+                                    <th width="13%" style="word-wrap:break-word">Confidence</th>
+                                    <th width="17%" style="word-wrap:break-word">Options</th>
+                                  </tr>
+                                  <% for(var j=0; j < generatedQuestion[i].question.length ; j++) {%>
+
+                                      <tr class="rowQues" data-filtered="<%= generatedQuestion[i].is_impossible[j] %>">
+                                        <td width="70%" style="word-wrap:break-word" data-gramm_editor="false" class="ques" onclick="handleEditQuesBtn(event)" onfocusout="handleSaveQuesBtn(event)" style="word-wrap:break-word;"><%= generatedQuestion[i].question[j] %></td>
+                                        <td width="13%" class="confidence_td" style="word-wrap:break-word"> <%=  parseFloat(generatedQuestion[i].score[j]).toFixed(5) %></td>
+                                        <td width="17%" style="word-wrap:break-word">
+                                          <button type="button" class="span showHeatMapBtn" onclick="handleShowHeatmapBtn(event)"  title="Show heatmap" data-toggle="modal" data-target="#heatmap<%=generatedQuestion[i].index %><%=j%>" >Attention weights</button>
+                                          <div class="modal" id="heatmap<%=generatedQuestion[i].index %><%=j%>">
+                                            <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                                              <div class="modal-content">
+                                                <div class="modal-header">
+                                                  <h4 class="modal-title">Heatmap</h4>
+                                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                </div>
+                                                <div class="modal-footer">
+                                                  <button type="button" class="zoom" onclick="zoomin(event)"> <i class="w3-xxlarge material-icons">zoom_in</i></button>
+                                                  <button type="button" class="zoom" onclick="zoomout(event)"> <i class="w3-xxlarge material-icons">zoom_out</i></button>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </td>
+                                      </tr>
+
+                                  <% } %>
+                                </table>
+                              </div><br>
+                              <div class="">
+                                <label style="padding-bottom:10px;padding-left:7px;padding-right:10px;">Answer : </label><textarea rows="1" class="answerPair" data-gramm_editor="false" onclick="handleEditBtn(event)" onfocusout="handleSaveBtn(event)" readonly cols="30"><%= generatedQuestion[i].answer %></textarea>
+                                <button type="button" class="span viewAnsBtn" title="View answer log" onclick="viewAnsLog(event)"  data-toggle="modal" data-target="#ansLog<%=generatedQuestion[i].index %>"><i class="w3-xxlarge material-icons">chrome_reader_mode</i></button>
+                                <div class="modal" id="ansLog<%=generatedQuestion[i].index %>">
+                                  <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h4 class="modal-title">Edited Answer Log</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      </div>
+                                      <div class="modal-body">
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="modal" id="quesLog<%=generatedQuestion[i].index %>">
+                                  <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h4 class="modal-title">Edited Question Log</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      </div>
+                                      <div class="modal-body">
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="modal" id="modal<%=generatedQuestion[i].index %>">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h4 class="modal-title">Source Paragraph</h4>
+                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </span>
+                            </div>
+                        </td>
+                      </tr>
+                      <% } %>
+                      </tbody>
+                    </table>
+
+
+                </div><br>
+              </form>
+              <div class="col-lg-12">
+                  <button type="button" id="downloadBtn" onclick="exportJSON(event)" class="btn btn-primary exportJSON" style="float:right">Export as json</button>
+                  <button type="button" style="padding-right:10px" onclick="exportTXT(event)" class="btn btn-primary exportTXT" style="float:right">Export as text</button>
+              </div>
+            </div>
+
+
+
+            <div id="grouped_pair" class="tabcontent">
+              <form id="groupedPairForm" action="/questions" method="post">
+                <div>
+                  <!-- <h4 class="groupedPair"></h4><br> -->
+                  <table class="display" id="groupedPair">
+                    <thead>
+                      <th>Grouped Answers</th>
+                    </thead>
+                    <tbody>
+                  <% for(var i=0; i < groupedAnswer.length; i++) {%>
+                      <tr>
+                        <td>
+                          <div class="groupPair">
+                            <span id="groupSpan<%=i %>" class="groupSpanData" data-val="<%= JSON.stringify(groupedAnswer[i]) %>" style="display: block;border-radius: 5px 5px 5px;border: 1px solid #777;">
+                              <button type="button" style="float:right" onclick="handleGroupDeleteBtn(event)" title="Delete this group" class="deleteGroupBtn"><i class="w3-xxlarge material-icons">delete</i></button>
+                              <div class="">
+                                <table width="100%" style="table-layout:fixed;">
+                                  <tr>
+                                    <th width="50%">Answer</th>
+                                    <th width="25%">Questions</th>
+                                    <th width="25%">Options</th>
+                                  </tr>
+                                  <tr>
+                                    <td width="50%">
+                                      <table>
+                                        <% for(var j=0; j < groupedAnswer[i].length ; j++) {%>
+                                          <tr>
+                                            <td id="ansTd<%=i%><%=j%>">
+                                              <textarea class="td_ans" style="border:none;border-left: 6px solid; resize:none;" rows="1" class="groupedAnswerPair" readonly cols="30"><%= groupedAnswer[i][j].answer %></textarea>
+                                            </td>
+                                          </tr>
+                                        <% } %>
+                                      </table>
+                                    </td>
+                                    <td width="25%">
+                                      <button type="button" onclick="viewGroupedQuestion(event)" data-i_index="<%=i%>" data-toggle="modal" data-target="#viewGroupQues<%=i%>" class="btn btn-info">View question</button>
+                                      <div class="modal" id="viewGroupQues<%=i%>">
+                                        <div class="modal-dialog modal-dialog-scrollable">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h4 class="modal-title">Questions</h4>
+                                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                            <div class="modal-body">
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <td width="25%">
+                                      <table>
+                                        <% for(var j=0; j < groupedAnswer[i].length ; j++) {%>
+                                          <tr>
+                                            <td>
+                                              <button type="button" class="span viewPairSource" data-j_index="<%=j%>" data-toggle="modal" data-target="#viewGroupAns<%=groupedAnswer[i][j].index%>" onclick="handleViewPairSource(event)"  title="View source Paragraph of this pair" ><i class="w3-xxlarge material-icons">chrome_reader_mode</i></button>
+                                            </td>
+                                          </tr>
+                                          <div class="modal" id="viewGroupAns<%=groupedAnswer[i][j].index %>">
+                                            <div class="modal-dialog modal-dialog-scrollable">
+                                              <div class="modal-content">
+                                                <div class="modal-header">
+                                                  <h4 class="modal-title">Source Paragraph</h4>
+                                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                        <% } %>
+                                      </table>
+                                    </td>
+                                  </tr>
+
+                                </table>
+                              </div>
+                            </div>
+                        </td>
+                      </tr>
+                      <% } %>
+                      </tbody>
+                    </table>
+                </div><br>
+              </form>
+            </div>
+
+
+
+
+
+
+
+
+
+            <div id="filtered_questions" class="tabcontent">
+
+                <div>
+                  <table class="display" id="filtered_questions_tbl" width="100%" style="table-layout: auto;" >
+                    <thead>
+                      <th width="70%" style="word-wrap:break-word">Question</th>
+                      <th width="20%" style="word-wrap:break-word">Answer</th>
+                      <th width="10%" style="word-wrap:break-word">Options</th>
+                    </thead>
+                    <tbody>
+                    <% for(var i=0; i < generatedQuestion.length; i++) {%>
+                      <% for(var j=0; j < generatedQuestion[i].question.length ; j++) {%>
+                        <% if(generatedQuestion[i].is_impossible[j]) {%>
+                            <tr>
+                              <td width="70%" style="word-wrap:break-word"><%= generatedQuestion[i].question[j] %></td>
+                              <td width="20%" style="word-wrap:break-word"><%= generatedQuestion[i].answer %></td>
+                              <td width="10%" style="word-wrap:break-word" data-val="<%= generatedQuestion[i].tagged_sentence %>">
+                                <button type="button" class="material_btn" title="View Source Paragraph" data-i_index="<%=i%>" data-j_index="<%=j%>" onclick="viewParaFiltered(event)" data-toggle="modal" data-target="#para-modal<%=i%><%=j%>"><i class="w3-xxlarge material-icons">description</i></button>
+                                <button type="button"  class="material_btn restore" onclick="restoreQues(event)" data-i_index="<%=i%>" data-j_index="<%=j%>"><i class="w3-xxlarge material-icons">restore_page</i></button>
+                              </td>
+                            </tr>
+                            <div class="modal" id="para-modal<%=i%><%=j%>">
+                              <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h4 class="modal-title">Source Paragraph</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  </div>
+                                  <div class="modal-body">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        <% } %>
+                      <% } %>
+                    <% } %>
+                    </tbody>
+                  </table>
+
+
+                </div><br>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div id="Sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <h5 style="text-decoration:none">Submit Content</h5>
+        <h5 style="text-decoration:none">Review Content</h5>
+        <h5 style="text-decoration:none">Select answers</h5>
+        <h5 class="active" style="text-decoration:none">Question ideas<button type="button" class="material_btn" onclick="fireWalkthrough()" title="Walkthrough"><i style="color:white" class="w3-large material-icons">contact_support</i></button></h5>
+      </div>
+
+
+    <script src="javascripts/questions.js"></script>
+  </body>
+</html>

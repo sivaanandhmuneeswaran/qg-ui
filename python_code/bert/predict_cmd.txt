@@ -1,0 +1,10 @@
+python3 predict.py \
+  --bert_model bert-base-uncased \
+  --model ./output/pytorch_model.bin \
+  --do_predict \
+  --do_lower_case \
+  --predict_file ./squad2.0/group_answers.json \
+  --max_seq_length 384 \
+  --doc_stride 128 \
+  --config_file ./output/config.json \
+  --output_dir ./output1 --version_2_with_negative

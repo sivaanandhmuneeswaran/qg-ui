@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>QG-UI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//oss.maxcdn.com/jquery.trip.js/3.3.3/trip.min.css">
+    <script src="/javascripts/trip.js"></script>
+    <script src="/javascripts/review.js"></script>
+      <script src="/javascripts/debounce.js"></script>
+  </head>
+  <body style="background:lavender;">
+    <div id="main" class="row no-gutters" style="height:100vh">
+        <div class="container-fluid">
+          <a href="/" style="text-decoration:none" class="anchorCSS">ParaQG</a>
+          <button class="openbtn"  style="float:right"onclick="openNav()">☰ </button>
+          <hr>
+        </div>
+        <div class="container-fluid">
+          <form id="review_form" class="" action="/keywords" method="post">
+            <div class="txtarea">
+              <div id="textarea1" name="para" contenteditable="true" data-gramm_editor="false" class="review form-control"  style="height:70vh">
+                <%- input %>
+              </div><br>
+            </div>
+
+
+            <div class="row">
+              <div class="col-lg-9">
+                <p>Word Count:
+                  <span id="WordCount">
+                    <font color="red">0
+                    </font>
+                  </span>
+                   (Word count must be between 100-3000.)
+                 </p>
+                 <h6 style="font-size:13px">English Content Only</h6>
+              </div>
+              <div class="col-lg-3">
+                  <button type="submit" id="proceedBtn" disabled title="Word count must be between 100-3000 to proceed" class="btn btn-primary" style="float:right">Proceed</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="Sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <h5 style="text-decoration:none">Submit Content</h5>
+        <h5 class="active" style="text-decoration:none">Review Content<button type="button" class="material_btn" onclick="fireWalkthrough()" title="Walkthrough"><i style="color:white" class="w3-large material-icons">contact_support</i></button></h5>
+        <h5 style="text-decoration:none">Select answers</h5>
+        <h5 style="text-decoration:none">Question ideas</h5>
+      </div>
+
+
+
+  </body>
+</html>

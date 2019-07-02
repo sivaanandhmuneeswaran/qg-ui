@@ -1,0 +1,329 @@
+h1 {
+  color: blue;
+  margin-left: 20px;
+}
+.anchorCSS{
+  text-decoration:none;margin-top:0;margin-bottom:.5rem;font-weight:500;line-height:1.2;font-size:2.5rem;margin-left: 20px;color:blue;
+}
+
+body{
+  background: lavender;
+}
+
+.textarea{
+  resize: none;
+  width: 100%;
+}
+
+.answerPair{
+  resize: none;
+  border:none;
+  border-bottom-style: dashed;
+  border-color: green;
+  outline: none;
+}
+.groupedAnswerPair{
+  resize: none;
+  border:none;
+}
+.questionSelect{
+  resize: none;
+  border:none;
+  border-bottom-style: dashed;
+  border-color: orange;
+  outline: none;
+}
+.answerSelect{
+  resize: none;
+  border:none;
+  border-bottom-style: dashed;
+  border-color: orange;
+  outline: none;
+}
+.tablink.custom {
+  background-color: #cccaca;
+  color: black;
+  float: left;
+  border: 1px solid #111;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  margin: 0px 0px 0px 0px;
+  font-size: 17px;
+  width: 100%;
+}
+.tablink.ner {
+  background-color: #cccaca;
+  color:black;
+  float: left;
+  border: 1px solid #111;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  margin: 0px 0px 0px 0px;
+  font-size: 17px;
+  width: 100%;
+}
+.tablink.np {
+  background-color: #cccaca;
+  color: black;
+  float: left;
+  border: 1px solid #111;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  margin: 0px 0px 0px 0px;
+  font-size: 17px;
+  width: 100%;
+}
+.tablink.np.active {
+  color:#28a745;
+  background-color:white;
+  float: left;
+  border: 1px solid #111;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  margin: 0px 0px 0px 0px;
+  font-size: 17px;
+  width: 100%;
+}
+.tablink.ner.active {
+  color:#ffc107;
+  background-color:white;
+  float: left;
+  border: 1px solid #111;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  margin: 0px 0px 0px 0px;
+  font-size: 17px;
+  width: 100%;
+}
+.tablink.custom.active {
+  color:#8A2BE2;
+  background-color:white;
+  float: left;
+  border: 1px solid #111;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  margin: 0px 0px 0px 0px;
+  font-size: 17px;
+  width: 100%;
+}
+.tablink.fq {
+  background-color: #cccaca;
+  color: black;
+  float: left;
+  border: 1px solid #111;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  margin: 0px 0px 0px 0px;
+  font-size: 17px;
+  width: 100%;
+}
+.tablink.fq.active, .tablink.ga.active, .tablink.qapair.active {
+  background-color: white;
+  color: black;
+  float: left;
+  border: 1px solid #111;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  margin: 0px 0px 0px 0px;
+  font-size: 17px;
+  width: 100%;
+}
+.tablink.ga {
+  background-color: #cccaca;
+  color: black;
+  float: left;
+  border: 1px solid #111;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  margin: 0px 0px 0px 0px;
+  font-size: 17px;
+  width: 100%;
+}
+.tablink.qapair {
+  background-color: #cccaca;
+  color: black;
+  float: left;
+  border: 1px solid #111;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  margin: 0px 0px 0px 0px;
+  font-size: 17px;
+  width: 100%;
+}
+.tablink:hover {
+  background-color: #818181;
+}
+h6{
+  display: inline;
+}
+li{
+  display:inline-block;
+  cursor: pointer;
+}
+
+div.review {
+  border-style: solid;
+  border-width: 1px;
+  width: 100%;
+  height: 50%;
+  font-size: 16px;
+  overflow-y: auto;
+}
+
+.atsign {
+    background-color: red;
+    color: #FFFFFF;
+    padding: 0px 2px;
+}
+.urlsign {
+    background-color: orange;
+    color: #FFFFFF;
+    padding: 0px 2px;
+}
+
+.ui-widget-header,.ui-state-default, ui-button {
+            background:#b9cd6d;
+            border: 1px solid #b9cd6d;
+            color: #FFFFFF;
+            font-weight: bold;
+}
+
+.editBtn,.saveBtn,.deleteBtn,.descBtn,.viewAnsBtn,.saveQuesBtn,.editQuesBtn,.viewQuesBtn,.viewPairSource,.deleteGroupBtn, .zoom, .material_btn {
+  background-color: none;
+  border: none;
+  background: none;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+}
+.padding-0{
+    padding-right:0;
+    padding-left:0;
+}
+.ner {
+  margin-top:2px;
+  margin-bottom:2px;
+}
+.np {
+  margin-top:2px;
+  margin-bottom:2px;
+}
+
+.reviewDeleteBtn {
+  color:white;
+  border: none;
+  background: none;
+  padding: 0px 0px 0px 0px;
+}
+.w3-small{font-size:12px!important}
+.w3-xxlarge{font-size:36px!important}
+
+@media (min-width: 768px) {
+  .modal-xl {
+    width: 90%;
+   max-width:1200px;
+  }
+}
+.btn.btn-outline-warning {
+  color: orange;
+}
+
+
+#Sidebar{
+	float: right;
+}
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 15%;
+}
+
+.sidebar h5, .sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+h5.active {
+  color: white;
+}
+.openbtn:hover {
+  background-color: #444;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+
+
+.custom_keyword_btn {
+  background-color: none;
+  border: none;
+  background: none;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 3px;
+}
+.custom-btn-clicked{color:#8A2BE2;border-color:#ffc107;}
+
+.custom_keyword_btn_added{background-color:#8A2BE2;color: white;}
+
+.nopadding {
+   padding: 0.7px !important;
+   margin: 0 !important;
+}
+
+.dataTables_filter, .dataTables_info { display: none; }
